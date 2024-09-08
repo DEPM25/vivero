@@ -12,8 +12,8 @@ Este proyecto está orientado a llevar un registro de los **Productores**, sus *
 
 ## Requisitos
 
-- [Laravel 9.x](https://laravel.com/docs/9.x)
-- PHP 8.1+
+- [Laravel 11.x](https://laravel.com/docs/11.x)
+- PHP 8.3+
 - MySQL o MariaDB (u otro sistema de base de datos compatible)
 - Composer
 
@@ -22,8 +22,8 @@ Este proyecto está orientado a llevar un registro de los **Productores**, sus *
 1. Clona el repositorio:
 
     ```bash
-    git clone https://github.com/tu-usuario/sistema-viveros.git
-    cd sistema-viveros
+    git clone https://github.com/DEPM25/vivero
+    cd vivero
     ```
 
 2. Instala las dependencias de PHP:
@@ -44,7 +44,7 @@ Este proyecto está orientado a llevar un registro de los **Productores**, sus *
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
     DB_PORT=3306
-    DB_DATABASE=sistema_viveros
+    DB_DATABASE=vivero
     DB_USERNAME=tu_usuario
     DB_PASSWORD=tu_contraseña
     ```
@@ -76,86 +76,22 @@ Laravel usa una base de datos separada para las pruebas. Para configurarla:
     DB_PASSWORD=contraseña_pruebas
     ```
 
-### Crear Factories
+## Escribir Pruebas Unitarias
 
-Para generar datos ficticios en las pruebas, necesitas crear **factories** para los modelos.
+Para escribir pruebas unitarias en Laravel, puedes generar tests con el siguiente comando
 
-#### Crear la Factory de Productor
+```bash
+php artisan make:test ProductorTest
+```
 
-1. Ejecuta el siguiente comando para crear una factory para **Productor**:
+## Ejecutar las pruebas
 
-    ```bash
-    php artisan make:factory ProductorFactory --model=Productor
-    ```
+Para ejecutar todas las pruebas del proyecto:
+```bash
+php artisan test
+```
 
-2. Configura la factory en `database/factories/ProductorFactory.php`:
-
-    ```php
-    use App\Models\Productor;
-    use Illuminate\Database\Eloquent\Factories\Factory;
-
-    class ProductorFactory extends Factory
-    {
-        protected $model = Productor::class;
-
-        public function definition()
-        {
-            return [
-                'documento_identidad' => $this->faker->unique()->numerify('#########'),
-                'nombre' => $this->faker->firstName,
-                'apellido' => $this->faker->lastName,
-                'telefono' => $this->faker->phoneNumber,
-                'correo' => $this->faker->safeEmail,
-            ];
-        }
-    }
-    ```
-
-#### Crear la Factory de Finca
-
-1. Ejecuta el siguiente comando para crear una factory para **Finca**:
-
-    ```bash
-    php artisan make:factory FincaFactory --model=Finca
-    ```
-
-2. Configura la factory en `database/factories/FincaFactory.php`:
-
-    ```php
-    use App\Models\Finca;
-    use Illuminate\Database\Eloquent\Factories\Factory;
-
-    class FincaFactory extends Factory
-    {
-        protected $model = Finca::class;
-
-        public function definition()
-        {
-            return [
-                'numero_catastro' => $this->faker->unique()->numerify('#########'),
-                'municipio' => $this->faker->city,
-                'productor_id' => \App\Models\Productor::factory(), // Relacionar con un productor
-            ];
-        }
-    }
-    ```
-
-### Verificar Relaciones
-
-Asegúrate de que el modelo **Finca** tenga una relación `belongsTo` con **Productor** en el archivo `app/Models/Finca.php`:
-
-```php
-class Finca extends Model
-{
-    protected $fillable = [
-        'numero_catastro',
-        'municipio',
-        'productor_id',
-    ];
-
-    public function productor()
-    {
-        return $this->belongsTo(Productor::class);
-    }
-}
+Para ejecutar una prueba especifica (en este caso `ProductorTest`):
+```bash
+php artisan test --filter ProductorTest
 ```
