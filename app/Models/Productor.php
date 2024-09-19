@@ -13,5 +13,5 @@ class Productor extends Model
 
     public function fincas() {
         return $this->hasMany(Finca::class);
-    }
+    }    
 }

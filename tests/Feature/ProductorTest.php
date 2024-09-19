@@ -39,4 +39,13 @@ class ProductorTest extends TestCase
 
         $this->assertTrue($productor->fincas->contains($finca));
     }
+
+    /** @test */
+    public function una_finca_pertenece_a_un_productor()
+    {
+        $productor = Productor::factory()->create();
+        $finca = Finca::factory()->create(['productor_id' => $productor->id]);
+
+        $this->assertEquals($productor->id, $finca->productor->id);
+    }
 }
