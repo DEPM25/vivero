@@ -1,0 +1,1 @@
+<h1>Registro de productos de control</h1>
