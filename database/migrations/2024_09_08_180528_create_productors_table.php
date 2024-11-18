@@ -9,15 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('productors', function (Blueprint $table) {
             $table->id();
-            $table->string('documento_identidad');
+            $table->string('cedula')->unique();
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('telefono');
-            $table->string('correo');
+            //$table->string('telefono');
+            //$table->string('correo');
             $table->timestamps();
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('productors');
     }

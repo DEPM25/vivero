@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Finca;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,12 +15,17 @@ class FincaFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Finca::class;
     public function definition(): array
     {
         return [
             'numero_catastro' => $this->faker->unique()->numerify('#########'),
             'municipio' => $this->faker->city,
             'productor_id' => \App\Models\Productor::factory(), // Relacionar con un productor
+            'nombre' => $this->faker->company(),
+            'ubicacion' => $this->faker->address(),
         ];
     }
+
+    
 }

@@ -9,7 +9,7 @@ class Finca extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['numero_catastro', 'municipio', 'productor_id'];
+    protected $fillable = ['numero_catastro', 'municipio', 'productor_id', 'nombre', 'ubicacion'];
 
     public function productor() {
         return $this->belongsTo(Productor::class);
