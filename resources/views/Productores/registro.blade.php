@@ -10,7 +10,6 @@
 <body class="bg-gray-50">
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg">
-            <!-- Encabezado -->
             <div>
                 <h2 class="text-center text-3xl font-extrabold text-gray-900">
                     Registro de Productor
@@ -20,14 +19,12 @@
                 </p>
             </div>
 
-            <!-- Mensajes de éxito -->
             @if (session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
                 </div>
             @endif
 
-            <!-- Errores de validación -->
             @if ($errors->any())
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
                     <ul class="list-disc list-inside">
@@ -38,8 +35,7 @@
                 </div>
             @endif
 
-            <!-- Formulario -->
-            <form class="mt-8 space-y-6" action="{{ route('productores.store') }}" method="POST">
+            <form class="mt-8 space-y-6" action="{{ route('productores.store') }}" method="POST" id="producatorForm">
                 @csrf
                 <div class="rounded-md shadow-sm space-y-4">
                     <div>
@@ -62,8 +58,12 @@
                                name="nombre" 
                                id="nombre" 
                                required
+                               pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"
-                               placeholder="Ingrese su nombre">
+                               placeholder="Ingrese su nombre"
+                               oninput="validateLettersOnly(this)"
+                               title="Solo se permiten letras">
+                        <span class="text-red-500 text-xs hidden" id="nombreError">Solo se permiten letras</span>
                     </div>
 
                     <div>
@@ -74,8 +74,12 @@
                                name="apellido" 
                                id="apellido" 
                                required
+                               pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"
-                               placeholder="Ingrese su apellido">
+                               placeholder="Ingrese su apellido"
+                               oninput="validateLettersOnly(this)"
+                               title="Solo se permiten letras">
+                        <span class="text-red-500 text-xs hidden" id="apellidoError">Solo se permiten letras</span>
                     </div>
 
                     <div>
@@ -112,5 +116,33 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function validateLettersOnly(input) {
+            // Expresión regular que permite solo letras (incluyendo acentos y ñ) y espacios
+            const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+            const errorElement = document.getElementById(input.id + 'Error');
+            
+            if (!regex.test(input.value)) {
+                // Si hay números o caracteres especiales, eliminarlos
+                input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+                errorElement.classList.remove('hidden');
+            } else {
+                errorElement.classList.add('hidden');
+            }
+        }
+
+        // Validación adicional antes de enviar el formulario
+        document.getElementById('producatorForm').addEventListener('submit', function(event) {
+            const nombre = document.getElementById('nombre');
+            const apellido = document.getElementById('apellido');
+            const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+
+            if (!regex.test(nombre.value) || !regex.test(apellido.value)) {
+                event.preventDefault();
+                alert('Por favor, asegúrese de que el nombre y apellido solo contengan letras.');
+            }
+        });
+    </script>
 </body>
 </html>

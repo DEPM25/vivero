@@ -18,11 +18,14 @@ class ProductorController extends Controller
     {
         // Validación de los datos
         $request->validate([
-            'documento_identidad' => 'required|unique:productors|max:20',
-            'nombre' => 'required|max:50',
-            'apellido' => 'required|max:50',
-            'telefono' => 'required|max:15',
-            'correo' => 'required|email|unique:productors',
+        'documento_identidad' => 'required|unique:productors|max:20',
+        'nombre' => 'required|max:50|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
+        'apellido' => 'required|max:50|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
+        'telefono' => 'required|max:15',
+        'correo' => 'required|email|unique:productors',
+        ], [
+        'nombre.regex' => 'El nombre solo debe contener letras',
+        'apellido.regex' => 'El apellido solo debe contener letras'
         ]);
 
         // Crear nuevo productor
