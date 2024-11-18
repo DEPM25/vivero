@@ -22,8 +22,6 @@ class FincaFactory extends Factory
             'numero_catastro' => $this->faker->unique()->numerify('#########'),
             'municipio' => $this->faker->city,
             'productor_id' => \App\Models\Productor::factory(), // Relacionar con un productor
-            'nombre' => $this->faker->company(),
-            'ubicacion' => $this->faker->address(),
         ];
     }
 

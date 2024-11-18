@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('productors', function (Blueprint $table) {
             $table->id();
-            $table->string('cedula')->unique();
+            $table->string('documento_identidad')->unique();
             $table->string('nombre');
             $table->string('apellido');
-            //$table->string('telefono');
-            //$table->string('correo');
+            $table->string('telefono');
+            $table->string('correo');
             $table->timestamps();
         });
     }
