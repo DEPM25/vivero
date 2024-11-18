@@ -20,7 +20,7 @@
                         <tr>
                             <th>Código</th>
                             <th>Tipo de Cultivo</th>
-                            <th>Finca</th>
+                            <th>Municipio</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,7 +28,7 @@
                         <tr>
                             <td>{{ $vivero->codigo }}</td>
                             <td>{{ $vivero->tipo_cultivo }}</td>
-                            <td>{{ $vivero->finca->nombre }}</td>
+                            <td>{{ $vivero->finca->municipio }}</td>
                         </tr>
                         @endforeach
                     </tbody>
