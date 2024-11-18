@@ -4,45 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Productor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Registro de Productor</h1>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg">
+            <!-- Encabezado -->
+            <div>
+                <h2 class="text-center text-3xl font-extrabold text-gray-900">
+                    Registro de Productor
+                </h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Complete el formulario con sus datos
+                </p>
+            </div>
 
-    <!-- Mostrar mensaje de éxito -->
-    @if (session('success'))
-        <p style="color: green;">{{ session('success') }}</p>
-    @endif
+            <!-- Mensajes de éxito -->
+            @if (session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                    <span class="block sm:inline">{{ session('success') }}</span>
+                </div>
+            @endif
 
-    <!-- Mostrar errores de validación -->
-    @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <!-- Errores de validación -->
+            @if ($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <!-- Formulario -->
+            <form class="mt-8 space-y-6" action="{{ route('productores.store') }}" method="POST">
+                @csrf
+                <div class="rounded-md shadow-sm space-y-4">
+                    <div>
+                        <label for="documento_identidad" class="block text-sm font-medium text-gray-700">
+                            Documento de Identidad
+                        </label>
+                        <input type="text" 
+                               name="documento_identidad" 
+                               id="documento_identidad" 
+                               required
+                               class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"
+                               placeholder="Ingrese su documento">
+                    </div>
+
+                    <div>
+                        <label for="nombre" class="block text-sm font-medium text-gray-700">
+                            Nombre
+                        </label>
+                        <input type="text" 
+                               name="nombre" 
+                               id="nombre" 
+                               required
+                               class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"
+                               placeholder="Ingrese su nombre">
+                    </div>
+
+                    <div>
+                        <label for="apellido" class="block text-sm font-medium text-gray-700">
+                            Apellido
+                        </label>
+                        <input type="text" 
+                               name="apellido" 
+                               id="apellido" 
+                               required
+                               class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"
+                               placeholder="Ingrese su apellido">
+                    </div>
+
+                    <div>
+                        <label for="telefono" class="block text-sm font-medium text-gray-700">
+                            Teléfono
+                        </label>
+                        <input type="tel" 
+                               name="telefono" 
+                               id="telefono" 
+                               required
+                               class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"
+                               placeholder="Ingrese su teléfono">
+                    </div>
+
+                    <div>
+                        <label for="correo" class="block text-sm font-medium text-gray-700">
+                            Correo Electrónico
+                        </label>
+                        <input type="email" 
+                               name="correo" 
+                               id="correo" 
+                               required
+                               class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"
+                               placeholder="Ingrese su correo">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" 
+                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Registrar Productor
+                    </button>
+                </div>
+            </form>
         </div>
-    @endif
-
-    <!-- Formulario de registro -->
-    <form action="{{ route('productores.store') }}" method="POST">
-        @csrf
-        <label for="documento_identidad">Documento de Identidad:</label>
-        <input type="text" name="documento_identidad" id="documento_identidad" required><br><br>
-
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" required><br><br>
-
-        <label for="apellido">Apellido:</label>
-        <input type="text" name="apellido" id="apellido" required><br><br>
-
-        <label for="telefono">Teléfono:</label>
-        <input type="text" name="telefono" id="telefono" required><br><br>
-
-        <label for="correo">Correo:</label>
-        <input type="email" name="correo" id="correo" required><br><br>
-
-        <button type="submit">Registrar</button>
-    </form>
+    </div>
 </body>
 </html>
