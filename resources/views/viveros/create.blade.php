@@ -40,7 +40,7 @@
                 <div class="mb-3">
                     <label for="finca_id" class="form-label">Finca</label>
                     <select class="form-control @error('finca_id') is-invalid @enderror" 
-                            id="finca_id" name="finca_id" required>
+                            id="finca_id" name="finca_id">
                         <option value="">Seleccione una finca</option>
                         @foreach($fincas as $finca)
                             <option value="{{ $finca->id }}" {{ old('finca_id') == $finca->id ? 'selected' : '' }}>
