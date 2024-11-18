@@ -9,6 +9,8 @@ class ProductoControl extends Model
 {
     use HasFactory;
 
+    protected $table = 'producto_controls';
+
     public static function rules()
     {
         return [
