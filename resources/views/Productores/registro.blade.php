@@ -86,12 +86,21 @@
                         <label for="telefono" class="block text-sm font-medium text-gray-700">
                             Teléfono
                         </label>
-                        <input type="tel" 
-                               name="telefono" 
-                               id="telefono" 
-                               required
-                               class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"
-                               placeholder="Ingrese su teléfono">
+                        <div class="relative">
+                            <input type="tel" 
+                                   name="telefono" 
+                                   id="telefono" 
+                                   required
+                                   pattern="[0-9]{9}"
+                                   maxlength="9"
+                                   class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"
+                                   placeholder="Ejemplo: 987654321"
+                                   oninput="validatePhone(this)">
+                            <span class="text-red-500 text-xs hidden" id="telefonoError">
+                                El teléfono debe contener 9 dígitos numéricos
+                            </span>
+                        </div>
+                        <span class="text-gray-500 text-xs">Formato: 9 dígitos sin espacios ni guiones</span>
                     </div>
 
                     <div>
@@ -103,7 +112,7 @@
                                id="correo" 
                                required
                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border"
-                               placeholder="Ingrese su correo">
+                               placeholder="ejemplo@correo.com">
                     </div>
                 </div>
 
@@ -119,12 +128,10 @@
 
     <script>
         function validateLettersOnly(input) {
-            // Expresión regular que permite solo letras (incluyendo acentos y ñ) y espacios
             const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
             const errorElement = document.getElementById(input.id + 'Error');
             
             if (!regex.test(input.value)) {
-                // Si hay números o caracteres especiales, eliminarlos
                 input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
                 errorElement.classList.remove('hidden');
             } else {
@@ -132,15 +139,39 @@
             }
         }
 
-        // Validación adicional antes de enviar el formulario
+        function validatePhone(input) {
+            // Eliminar cualquier carácter que no sea número
+            input.value = input.value.replace(/[^0-9]/g, '');
+            
+            const errorElement = document.getElementById('telefonoError');
+            const regex = /^[0-9]{9}$/;
+            
+            if (!regex.test(input.value)) {
+                errorElement.classList.remove('hidden');
+            } else {
+                errorElement.classList.add('hidden');
+            }
+        }
+
+        // Validación del formulario antes de enviar
         document.getElementById('producatorForm').addEventListener('submit', function(event) {
             const nombre = document.getElementById('nombre');
             const apellido = document.getElementById('apellido');
-            const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+            const telefono = document.getElementById('telefono');
+            
+            const letrasRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+            const telefonoRegex = /^[0-9]{9}$/;
 
-            if (!regex.test(nombre.value) || !regex.test(apellido.value)) {
+            if (!letrasRegex.test(nombre.value) || !letrasRegex.test(apellido.value)) {
                 event.preventDefault();
                 alert('Por favor, asegúrese de que el nombre y apellido solo contengan letras.');
+                return;
+            }
+
+            if (!telefonoRegex.test(telefono.value)) {
+                event.preventDefault();
+                alert('Por favor, ingrese un número de teléfono válido de 9 dígitos.');
+                return;
             }
         });
     </script>
