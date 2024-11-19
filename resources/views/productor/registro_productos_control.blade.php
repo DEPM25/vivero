@@ -28,7 +28,7 @@
     @endif
     
     <!-- Formulario -->
-    <form method="POST" action="{{ route('productos.store') }}" class="space-y-6">
+    <form method="POST" action="{{ route('productor.store') }}" class="space-y-6">
         @csrf
         
         <!-- Registro ICA -->
@@ -136,9 +136,9 @@
                             {{ ucfirst($producto->tipo_control) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="{{ route('productos.edit', $producto->id) }}" 
+                            <a href="{{ route('productor.edit', $producto->id) }}" 
                                class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
-                            <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" 
+                            <form action="{{ route('productor.destroy', $producto->id) }}" method="POST" 
                                   class="inline-block">
                                 @csrf
                                 @method('DELETE')

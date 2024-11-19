@@ -44,7 +44,7 @@
                         <option value="">Seleccione una finca</option>
                         @foreach($fincas as $finca)
                             <option value="{{ $finca->id }}" {{ old('finca_id') == $finca->id ? 'selected' : '' }}>
-                                {{ $finca->nombre }}
+                                {{ $finca->numero_catastro }}
                             </option>
                         @endforeach
                     </select>

@@ -7,10 +7,12 @@ use App\Models\Productor;
 
 class ProductorController extends Controller
 {
+
     // Muestra el formulario de registro
     public function showRegistroForm()
     {
-        return view('productores.registro');
+         $productores = Productor::paginate(10); // Cambia 10 por el número de registros que quieras por página
+        return view('productores.registro', compact('productores'));
     }
 
     // Procesa el registro de un nuevo productor

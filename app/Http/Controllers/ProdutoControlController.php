@@ -11,7 +11,7 @@ class ProdutoControlController extends Controller
     {
         // Obtener todos los productos ordenados por fecha de creación descendente
         $productos = ProductoControl::orderBy('created_at', 'desc')->get();
-        return view('registro_productos_control', compact('productos'));
+        return view('productor.registro_productos_control', compact('productos'));
     }
 
     public function store(Request $request)
@@ -30,13 +30,13 @@ class ProdutoControlController extends Controller
     {
         // Obtener productos para mostrar en la tabla
         $productos = ProductoControl::orderBy('created_at', 'desc')->get();
-        return view('registro_productos_control', compact('productos'));
+        return view('productor.registro_productos_control', compact('productos'));
     }
 
     public function edit($id)
     {
         $producto = ProductoControl::findOrFail($id);
-        return view('editar_productos_control', compact('producto'));
+        return view('productor.editar_productos_control', compact('producto'));
     }
 
     public function update(Request $request, $id)
@@ -47,7 +47,7 @@ class ProdutoControlController extends Controller
         
         $producto->update($validated);
         
-        return redirect()->route('productos.index')
+        return redirect()->route('productor.editar_productos_control')
             ->with('success', 'Producto actualizado con éxito');
     }
 
@@ -56,7 +56,7 @@ class ProdutoControlController extends Controller
         $producto = ProductoControl::findOrFail($id);
         $producto->delete();
         
-        return redirect()->route('productos.index')
+        return redirect()->route('productor.index')
             ->with('success', 'Producto eliminado con éxito');
     }
 
@@ -71,6 +71,6 @@ class ProdutoControlController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
             
-        return view('registro_productos_control', compact('productos'));
+        return view('productor.index', compact('productos'));
     }
 }
