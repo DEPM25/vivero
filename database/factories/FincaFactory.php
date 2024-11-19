@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Finca;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,7 @@ class FincaFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Finca::class;
     public function definition(): array
     {
         return [
@@ -22,4 +24,6 @@ class FincaFactory extends Factory
             'productor_id' => \App\Models\Productor::factory(), // Relacionar con un productor
         ];
     }
+
+    
 }

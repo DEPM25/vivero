@@ -9,7 +9,7 @@ class Productor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['documento_identidad', 'nombre', 'apellido', 'correo', 'telefono'];
+    protected $fillable = ['documento_identidad', 'nombre', 'apellido','telefono','correo'];
 
     public function fincas() {
         return $this->hasMany(Finca::class);
